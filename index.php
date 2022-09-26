@@ -38,6 +38,22 @@
     <input type="submit" name="addMember" value="Add"/>
     </form>
     <!--Sale input-->
+    <form action="index.php" method="post">
+    <fieldset>
+
+        <legend>Add Sales</legend>
+        <ul style="list-style-type: none;">
+        <li style="display: inline-block;">
+            <input type="checkbox" name="kiwi" class="fruit"/>
+            <label for="kiwi"><img src="/gotogro/images/kiwi.png" width="100px">Kiwi</label>
+            <label for="quantity">quantity</label>
+            <input type="text" name="quantity"/>
+        </li>
+        </ul>
+
+    </fieldset>
+    <input type="submit" name="addSale" value="Add"/>
+    </form>
 
     
 
@@ -57,9 +73,7 @@
     $email = null;
     $address = null;
 
-    $validInput = false;
-
-
+    $validMemberInput = false;
 
     //Catching the Variables from the POST submission form
     catchVar("firstName", $firstName);
@@ -69,12 +83,11 @@
     catchVar("address", $address);
 
     //Testing statment
-    //echo "<p>",empty($_POST['firstName']), $firstName, $lastName, $phoneNo, $email, $address,$validInput," </p>";
-
+    //echo "<p>",empty($_POST['firstName']), $firstName, $lastName, $phoneNo, $email, $address,$validMemberInput," </p>";
 
     //QUERY TO INSERT/ADD MEMBER
     $sql_table = "customer";
-    if($validInput){
+    if($validMemberInput){
     $query = "INSERT INTO $sql_table (customerID, firstName, lastName, phoneNo, email, address) 
              VALUES (NULL, '$firstName', '$lastName', '$phoneNo', '$email', '$address')";
             // VALUES (NULL, 'tName', 'tLast', '00000000', 'Email@Email.com', 'AD')";
@@ -88,6 +101,33 @@
     }
 
     //THIS SECTION PRETAINS TO ADDING SALES RECORDS THIS WILL BE MOVED TO
+    //Initializing variables
+    $quantity = null;
+    $kiwi = null;
+    
+    $validSaleInput = false;
+
+    //Get Item
+    catchVar("quantity", $quantity);
+    catchVarItem("kiwi", $kiwi);
+
+    $sql_table="saledetail";
+    //Add item 
+    if($validSaleInput and $validMemberInput){
+        $query = "INSERT INTO $sql_table (saleID, itemID, quantity, price) 
+        VALUES (SELECT saleID FROM sale WHERE customerID=1;,SELECT itemID FROM item WHERE productName=\"Kiwi\";, $quantity, (SELECT price FROM item WHERE productName=\"Kiwi\";)*$quantity)";
+       $result = mysqli_query($conn, $query);
+       if(!$result){
+           echo "<p>Something went wrong with", $query, $conn->error , "</p>";
+       }
+       else{
+           echo "<p> <img src=\"/gotogro/images/kiwi.png\" width=\"100px\"> </p>";
+       }
+
+    }
+
+
+    //function check if item is checked 
 
 
     mysqli_close($conn);
@@ -97,10 +137,19 @@
 
     //CATCHES THE INPUT AND ASSIGNS IT TO VAR, ALSO CHECKS FOR INPUT EXISITENCE, NEED MORE VALIDATIONG/SANITATION OF INPUT
     function catchVar($input, &$var){
-        global $validInput;
+        global $validMemberInput;
         if(!empty($_POST[$input])){
             $var = $_POST[$input];
-            $validInput = True;
+            $validMemberInput = True;
+        }
+    }
+
+    //Assigns the variables
+    function catchVarItem($input, &$var){
+        global $validSaleInput;
+        if(isset($_POST[$input])){
+            $var = $_POST[$input];
+            $validSaleInput = True;
         }
     }
 
