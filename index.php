@@ -23,7 +23,7 @@
     <!--Member input-->
     <form action="index.php" method="post">
     <fieldset>
-        <legend>Search Data base</legend>
+        <legend>Add member to Database</legend>
         <label for="firstName">First Name</label>
         <input type="text" name="firstName" id="firstName" value=""/>
         <label for="lastName">Last Name</label>
@@ -113,19 +113,21 @@
 
     $sql_table="saledetail";
     //Add item 
-    if($validSaleInput and $validMemberInput){
+    if($validSaleInput){ //and $validMemberInput){
+        $saleID = mysqli_query($conn, "SELECT saleID FROM sale WHERE customerID=1;")->fetch_row()[0] ?? false;
+        $itmeID = mysqli_query($conn, "SELECT itemID FROM item WHERE productName=\"Kiwi\";")->fetch_row()[0] ?? false;
+        $price = mysqli_query($conn, "SELECT price FROM item WHERE productName=\"Kiwi\";")->fetch_row()[0] ?? false;
         $query = "INSERT INTO $sql_table (saleID, itemID, quantity, price) 
-        VALUES (SELECT saleID FROM sale WHERE customerID=1;,SELECT itemID FROM item WHERE productName=\"Kiwi\";, $quantity, (SELECT price FROM item WHERE productName=\"Kiwi\";)*$quantity)";
+        VALUES ($saleID,$itmeID, $quantity, $price*$quantity)";
        $result = mysqli_query($conn, $query);
        if(!$result){
-           echo "<p>Something went wrong with", $query, $conn->error , "</p>";
+           echo "<p>Something went wrong with", $saleID,$query, $conn->error , "</p>";
        }
        else{
-           echo "<p> <img src=\"/gotogro/images/kiwi.png\" width=\"100px\"> </p>";
+           echo "<p>",$saleID,$itmeID, $quantity, $price,"</p>";
        }
 
     }
-
 
     //function check if item is checked 
 
