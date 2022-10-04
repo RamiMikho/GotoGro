@@ -65,6 +65,43 @@
         echo "<p>Database connection failed</p>";
     }
     else{
+    //query to get each item
+    $sqlTable = "item";
+    $result = mysqli_query($conn, "SELECT * FROM $sqlTable");
+    //COME BACK TO THIS MAKE IT PRETTIER
+    //THIS SECTION IS FOR DISPLAYING THE SALES ITEMS FROM SQL DB
+    echo "
+    <form action=\"index.php\" method=\"post\">
+    <fieldset>
+        <legend>Add Sales</legend>
+        <select name=\"customerID\">";
+        $names = mysqli_query($conn,"SELECT * FROM customer");
+        while($customerRow = mysqli_fetch_assoc($names)){
+            $fName = $customerRow["firstName"];
+            $IDs = $customerRow["customerID"];
+            echo "<option value=\"$IDs\">$fName</option>";
+        };
+        
+        echo "</select>
+        <ul style=\"list-style-type: none;\">";
+
+        while ($row = mysqli_fetch_assoc($result)) { 
+            echo "<li style=\"display: inline-block;\">";
+            $value = $row["productName"];
+            echo "<input type=\"checkbox\" name=\"cart\" value=\"$value\" class=\"fruit\"/>
+                <label for=\"$value\"><img src=\"/gotogro/images/$value.png\" width=\"100px\">$value</label>
+                <label for=\"quantity\">quantity</label>
+                <input type=\"text\" name=\"quantity\"/>";
+            echo "</li>";
+        };
+        echo "</ul>";
+    echo "</fieldset>
+    <input type=\"submit\" name=\"addSale\" value=\"Add\"/>
+    </form>
+
+    ";
+
+
     //THIS SECTION PRETAINS TO ADDING USERS
     //Intializing Variables
     $firstName = null;
@@ -86,9 +123,9 @@
     //echo "<p>",empty($_POST['firstName']), $firstName, $lastName, $phoneNo, $email, $address,$validMemberInput," </p>";
 
     //QUERY TO INSERT/ADD MEMBER
-    $sql_table = "customer";
+    $sqlTable = "customer";
     if($validMemberInput){
-    $query = "INSERT INTO $sql_table (customerID, firstName, lastName, phoneNo, email, address) 
+    $query = "INSERT INTO $sqlTable (customerID, firstName, lastName, phoneNo, email, address) 
              VALUES (NULL, '$firstName', '$lastName', '$phoneNo', '$email', '$address')";
             // VALUES (NULL, 'tName', 'tLast', '00000000', 'Email@Email.com', 'AD')";
             $result = mysqli_query($conn, $query);
@@ -104,27 +141,35 @@
     //Initializing variables
     $quantity = null;
     $kiwi = null;
-    
+    $customerID = null;
+    $cart = null;
+
     $validSaleInput = false;
+    
 
     //Get Item
-    catchVar("quantity", $quantity);
+    catchVarItem("quantity", $quantity);
+    catchVarItem("customerID",$customerID);
+    catchVarItem("cart", $cart);
     catchVarItem("kiwi", $kiwi);
 
-    $sql_table="saledetail";
+    $sqlTable="saledetail";
     //Add item 
-    if($validSaleInput){ //and $validMemberInput){
-        $saleID = mysqli_query($conn, "SELECT saleID FROM sale WHERE customerID=1;")->fetch_row()[0] ?? false;
+    if($validSaleInput){ 
+        $saleID = mysqli_query($conn, "SELECT saleID FROM sale WHERE customerID=$customerID;")->fetch_row()[0] ?? false;
         $itmeID = mysqli_query($conn, "SELECT itemID FROM item WHERE productName=\"Kiwi\";")->fetch_row()[0] ?? false;
         $price = mysqli_query($conn, "SELECT price FROM item WHERE productName=\"Kiwi\";")->fetch_row()[0] ?? false;
-        $query = "INSERT INTO $sql_table (saleID, itemID, quantity, price) 
+        $query = "INSERT INTO $sqlTable (saleID, itemID, quantity, price) 
         VALUES ($saleID,$itmeID, $quantity, $price*$quantity)";
        $result = mysqli_query($conn, $query);
        if(!$result){
-           echo "<p>Something went wrong with", $saleID,$query, $conn->error , "</p>";
+           echo "<p>Something went wrong </p>";
        }
        else{
-           echo "<p>",$saleID,$itmeID, $quantity, $price,"</p>";
+        foreach ($cart as $fruit){ 
+            echo $fruit."<br />";
+        }
+
        }
 
     }
@@ -146,7 +191,7 @@
         }
     }
 
-    //Assigns the variables
+    //Assigns the variables for the sale of items
     function catchVarItem($input, &$var){
         global $validSaleInput;
         if(isset($_POST[$input])){
@@ -161,3 +206,6 @@
     <p>&#169; GotoGro</p>
 </footer>
 </html>
+
+foreach ($row) { // I you want you can right this line like this: foreach($row as $value) {
+                 // I just did not use "htmlspecialchars()" function. 
