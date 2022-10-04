@@ -60,7 +60,7 @@
 <?php
     //ESTABLISHING CONNECTION TO DATABASE
     require_once("SQLSettings.php");
-    $conn = new mysqli($host, $user, $pwd, $sql_db);
+    $conn = new mysqli($host, $user, $pwd, $sqlDB);
     if(!$conn){
         echo "<p>Database connection failed</p>";
     }
@@ -88,10 +88,10 @@
         while ($row = mysqli_fetch_assoc($result)) { 
             echo "<li style=\"display: inline-block;\">";
             $value = $row["productName"];
-            echo "<input type=\"checkbox\" name=\"cart\" value=\"$value\" class=\"fruit\"/>
+            echo "<input type=\"checkbox\" name=\"cart[]\" value=\"$value\" class=\"fruit\"/>
                 <label for=\"$value\"><img src=\"/gotogro/images/$value.png\" width=\"100px\">$value</label>
                 <label for=\"quantity\">quantity</label>
-                <input type=\"text\" name=\"quantity\"/>";
+                <input type=\"text\" name=\"quantity$value\"/>";
             echo "</li>";
         };
         echo "</ul>";
@@ -139,7 +139,6 @@
 
     //THIS SECTION PRETAINS TO ADDING SALES RECORDS THIS WILL BE MOVED TO
     //Initializing variables
-    $quantity = null;
     $kiwi = null;
     $customerID = null;
     $cart = null;
@@ -148,29 +147,54 @@
     
 
     //Get Item
-    catchVarItem("quantity", $quantity);
     catchVarItem("customerID",$customerID);
     catchVarItem("cart", $cart);
     catchVarItem("kiwi", $kiwi);
 
+    $sqlTable="sale";
+    //Add to Sales sql table
+    if($validSaleInput){
+
+        $currentDate = date("Y-m-d");
+        $total = 0;
+        foreach ($cart as $fruit){ 
+            catchVarItem("quantity$fruit", $quantity);// VERY UGLY SOLUTION
+            $price = mysqli_query($conn, "SELECT price FROM item WHERE productName=\"$fruit\";")->fetch_row()[0] ?? false;
+            $total = $total + $price * $quantity;
+        }
+        
+        $query = "INSERT INTO $sqlTable (customerID, totalPrice, date) VALUES ($customerID, $total, '$currentDate')";
+        $result = mysqli_query($conn, $query);
+        if(!$result){
+           echo $conn->error,"<p>Something went wrong </p>";
+        }
+        else{
+        
+        }
+    };
     $sqlTable="saledetail";
-    //Add item 
+    //Add item into sales details
     if($validSaleInput){ 
-        $saleID = mysqli_query($conn, "SELECT saleID FROM sale WHERE customerID=$customerID;")->fetch_row()[0] ?? false;
-        $itmeID = mysqli_query($conn, "SELECT itemID FROM item WHERE productName=\"Kiwi\";")->fetch_row()[0] ?? false;
-        $price = mysqli_query($conn, "SELECT price FROM item WHERE productName=\"Kiwi\";")->fetch_row()[0] ?? false;
+        
+        $saleID = mysqli_query($conn, "SELECT saleID FROM sale WHERE customerID=$customerID ORDER BY saleID DESC;")->fetch_row()[0] ?? false; //VERY UGLY SOLUTION HERE TOO
+        foreach ($cart as $fruit){ 
+        $itmeID = mysqli_query($conn, "SELECT itemID FROM item WHERE productName=\"$fruit\";")->fetch_row()[0] ?? false;//gets itemID from database
+        $price = mysqli_query($conn, "SELECT price FROM item WHERE productName=\"$fruit\";")->fetch_row()[0] ?? false;//gets price from database
+        catchVarItem("quantity$fruit", $quantity); //catches quantity for fruit
         $query = "INSERT INTO $sqlTable (saleID, itemID, quantity, price) 
         VALUES ($saleID,$itmeID, $quantity, $price*$quantity)";
-       $result = mysqli_query($conn, $query);
-       if(!$result){
+        $result = mysqli_query($conn, $query);
+        if(!$result){
            echo "<p>Something went wrong </p>";
-       }
-       else{
+        }
+        else{
         foreach ($cart as $fruit){ 
-            echo $fruit."<br />";
+            echo $fruit, "<br />";
         }
 
        }
+    }
+
 
     }
 
@@ -206,6 +230,3 @@
     <p>&#169; GotoGro</p>
 </footer>
 </html>
-
-foreach ($row) { // I you want you can right this line like this: foreach($row as $value) {
-                 // I just did not use "htmlspecialchars()" function. 
