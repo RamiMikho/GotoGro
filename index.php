@@ -38,22 +38,8 @@
     <input type="submit" name="addMember" value="Add"/>
     </form>
     <!--Sale input-->
-    <form action="index.php" method="post">
-    <fieldset>
+    <!--This is done in php now-->
 
-        <legend>Add Sales</legend>
-        <ul style="list-style-type: none;">
-        <li style="display: inline-block;">
-            <input type="checkbox" name="kiwi" class="fruit"/>
-            <label for="kiwi"><img src="/gotogro/images/kiwi.png" width="100px">Kiwi</label>
-            <label for="quantity">quantity</label>
-            <input type="text" name="quantity"/>
-        </li>
-        </ul>
-
-    </fieldset>
-    <input type="submit" name="addSale" value="Add"/>
-    </form>
 
     
 
