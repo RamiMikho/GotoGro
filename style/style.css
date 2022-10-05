@@ -1,0 +1,514 @@
+/* General */
+* {
+  margin: 0;
+  padding: 0;
+}
+html {
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  overflow-x: hidden;
+}
+body {
+  height: 100%;
+  width: 100%;
+  background-image: white;
+  background-attachment: fixed;
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.content,
+.form,
+.personal-info,
+.services {
+  flex: 1 0 auto;
+}
+nav {
+  width: 100%;
+  height: 15vh;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  padding-left: 60px;
+}
+.logo {
+  width: 160px;
+  cursor: pointer;
+}
+nav ul li {
+  display: inline-block;
+  list-style: none;
+  margin: 20px;
+}
+nav ul li a {
+  text-decoration: none;
+  color: black;
+}
+nav ul li a:hover {
+  background-color: #3232ff;
+  color: whitesmoke;
+}
+footer {
+  background-color: orangered;
+  height: auto;
+  width: 100%;
+  font-family: sans-serif;
+  padding-top: 40px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  flex-shrink: 0;
+}
+footer h3 {
+  font-size: 2rem;
+  font-weight: 400;
+  text-transform: capitalize;
+  line-height: 3rem;
+}
+footer p {
+  max-width: 500px;
+  margin: 10px auto;
+  line-height: 28px;
+  font-size: 14px;
+}
+footer .social {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem 0 3rem 0;
+}
+footer .social li {
+  margin: 0 10px;
+}
+footer .social li a {
+  text-decoration: none;
+  color: white;
+}
+footer .social li a i {
+  font-size: 1.2rem;
+}
+footer .social li a:hover i {
+  color: rgb(132, 112, 255);
+}
+/*  */
+
+/* Home page */
+.content {
+  margin: auto;
+  display: flex;
+  align-items: center;
+}
+.content img {
+  margin: 60px;
+}
+.text {
+  margin: 30px;
+  font-size: 20px;
+}
+.text h1 {
+  margin: 0 10px;
+}
+.text hr {
+  border-top: 3px dashed #00004c;
+}
+.text p {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.text a button {
+  border-radius: 4px;
+  background-color: rgb(96, 123, 139);
+  border: none;
+  color: whitesmoke;
+  text-align: center;
+  font-size: 15px;
+  padding: 15px;
+  width: 200px;
+  cursor: pointer;
+  margin: 5px;
+}
+/*  */
+
+/* Product */
+header h1 {
+  letter-spacing: 4px;
+  font-size: 72px;
+  text-align: center;
+  margin: 30px;
+  color: white;
+  background-color: rgb(96, 123, 139);
+}
+.services {
+  margin-bottom: 100px;
+}
+.services aside {
+  width: 25%;
+  border: 4px inset purple;
+  border-radius: 14px;
+  background-color: rgb(96, 123, 139);
+  margin: 1em;
+  padding: 1em;
+  float: right;
+  box-shadow: 10px 10px 5px #aaaaaa;
+  text-align: center;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}
+.services aside ul {
+  list-style: none;
+}
+.services aside ul li {
+  padding: 8px;
+  font-size: large;
+}
+.services aside ul li a {
+  text-decoration: none;
+  color: wheat;
+}
+.services aside ul li:hover {
+  background-color: coral;
+}
+.home-internet,
+.business-internet {
+  width: 70%;
+  float: left;
+  text-align: center;
+  margin: 0 auto;
+  align-items: center;
+  position: relative;
+}
+.home-internet h2,
+.business-internet h2 {
+  padding: 20px;
+  margin: 30px;
+  color: wheat;
+  background-color: rgb(96, 123, 139);
+  font-size: 40px;
+}
+.home-internet img {
+  height: 250px;
+  width: 280px;
+}
+#section1,
+#section2,
+#section3 {
+  width: 70%;
+  margin: auto;
+  display: flex;
+  padding-bottom: 30px;
+  font-size: 20px;
+}
+#section1 p,
+#section2 p,
+#section3 p {
+  padding: 20px;
+}
+.home-internet button {
+  border-radius: 4px;
+  background-color: darkorange;
+  border: none;
+  color: whitesmoke;
+  text-align: center;
+  font-size: 15px;
+  padding: 15px;
+  width: 150px;
+  cursor: pointer;
+  margin: 5px;
+  height: 50px;
+}
+.business-internet .business-internet-content {
+  padding: 20px;
+  margin: 30px;
+  text-align: left;
+}
+.business-internet .business-internet-content h3 {
+  background-color: #394953;
+  color: white;
+  font-size: 30px;
+  padding: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  width: 70%;
+}
+.business-internet .business-internet-content p {
+  font-size: 20px;
+}
+.business-internet .business-internet-content ol li {
+  font-size: 20px;
+  margin: 10px;
+}
+.business-internet .product-table table {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 30px;
+  font-size: 18px;
+  border-spacing: 0ch;
+  border: 2px solid black;
+}
+.business-internet .product-table th,
+.business-internet .product-table td {
+  height: 70px;
+  padding: 10px;
+  border: 2px solid black;
+}
+.business-internet .product-table table .small-col {
+  width: 350px;
+}
+.business-internet .product-table th {
+  background-color: #394953;
+  color: darkorange;
+}
+.business-internet .product-table .i15mbps {
+  background-color: #0000cc;
+  color: whitesmoke;
+}
+.business-internet .product-table .i55mbps {
+  background-color: #0000b2;
+  color: whitesmoke;
+}
+.business-internet .product-table .i110mbps {
+  background-color: #000099;
+  color: whitesmoke;
+}
+.business-internet .product-table .i250mbps {
+  background-color: #00007f;
+  color: whitesmoke;
+}
+.business-internet .product-table .gig {
+  background-color: #000066;
+  color: whitesmoke;
+}
+.business-internet .product-table button {
+  border-radius: 4px;
+  background-color: darkorange;
+  border: none;
+  color: whitesmoke;
+  text-align: center;
+  font-size: 15px;
+  padding: 15px;
+  width: 150px;
+  cursor: pointer;
+  margin: 5px;
+  height: 50px;
+}
+/*  */
+
+/* Edit membership */
+.form {
+  margin: 0px auto 0;
+  padding: 60px 0px 150px;
+  box-sizing: border-box;
+  width: 900px;
+  background: firebrick;
+  padding: 50px;
+  text-align: center;
+  margin: auto;
+  margin-top: 2%;
+  margin-bottom: 10px;
+  color: white;
+  font-family: "Century Gothic", sans-serif;
+}
+.form-title {
+  text-align: center;
+  color: wheat;
+  margin-bottom: 50px;
+}
+form  {
+  width: 100%;
+  margin: 25px 0;
+  align-items: center;
+}
+.form form legend {
+  padding: 20px;
+  font-weight: bold;
+  font-size: 25px;
+  color: wheat;
+}
+form .input,
+.form form select {
+  margin-bottom: 30px;
+  align-items: center;
+  position: relative;
+}
+
+.form form .input label {
+  margin-bottom: 10px;
+  color: lightcoral;
+  font-size: large;
+  font-weight: bold;
+  left: 8px;
+  position: absolute;
+  top: 0;
+
+  opacity: 0;
+  transition: "all 200ms";
+} 
+.form form .input input:not(:placeholder-shown) + label {
+  background: #fff;
+  transform: translate(0, -50%);
+  opacity: 1;
+}
+
+.form form .product-feature {
+  clear: both;;
+}
+
+.form form .button input {
+  border-radius: 4px;
+  background-color: lightsalmon;
+  border: none;
+  color: whitesmoke;
+  text-align: center;
+  font-size: 15px;
+  padding: 15px;
+  width: 200px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.form dl {
+  border: 4px rgb(135, 206, 250);
+  padding: 10px;
+}
+
+
+/* About us */
+.personal-info {
+  width: 500px;
+  background: darkorange;
+  padding: 50px;
+  text-align: center;
+  margin: auto;
+  margin-top: 5%;
+  margin-bottom: 100px;
+  color: white;
+  font-family: "Century Gothic", sans-serif;
+}
+
+
+.personal-info h1 {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+.personal-info dl {
+  border: 4px rgb(135, 206, 250);
+  padding: 20px;
+}
+.personal-info dl dt {
+  float: left;
+  clear: left;
+  width: 100px;
+  text-align: right;
+  font-size: 20px;
+  color: wheat;
+}
+.personal-info dl dd {
+  margin: 0 0 0 120px;
+  padding: 0 0 20px 0;
+  font-size: 20px;
+}
+
+
+/* Payment */
+form {
+  margin: 0px auto 0;
+  padding: 60px 0px 150px;
+  box-sizing: border-box;
+  width: 800px;
+  background:  firebrick;
+  padding: 50px;
+  text-align: center;
+  margin: auto;
+  margin-top: 5%;
+  margin-bottom: 100px;
+  color: white;
+  font-family: "Century Gothic", sans-serif;
+}
+form .customer-details {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+form dl {
+  border: 4px rgb(135, 206, 250);
+  padding: 20px;
+}
+form dl dt {
+  float: left;
+  clear: left;
+  width: 180px;
+  text-align: right;
+  font-size: 20px;
+  color: wheat;
+}
+form dl dd {
+  margin: 0 0 0 120px;
+  padding: 0 0 20px 0;
+  font-size: 20px;
+}
+form fieldset{
+  clear: both;
+}
+form legend {
+  padding: 20px;
+  font-weight: bold;
+  font-size: 25px;
+  color: wheat;
+}
+form .input,
+.form form select {
+  margin-bottom: 30px;
+  align-items: center;
+  position: relative;
+}
+form .input input,
+form select {
+  height: 40px;
+  width: 400px;
+  border: 1px solid #cccccc;
+  font-size: 16px;
+  background-color: #f0f0f0;
+  padding: 3px 6px 3px 6px;
+  margin: 10px;
+}
+form .input label {
+  margin-bottom: 10px;
+  color: rgb(32, 178, 170);
+  font-size: large;
+  font-weight: bold;
+  left: 8px;
+  position: absolute;
+  top: 0;
+
+  opacity: 0;
+  transition: "all 200ms";
+}
+form .input input:not(:placeholder-shown) + label {
+  background: #fff;
+  transform: translate(0, -50%);
+  opacity: 1;
+}
+form .button button, form .button input {
+  border-radius: 4px;
+  background-color: darkorange;
+  border: none;
+  color: whitesmoke;
+  text-align: center;
+  font-size: 15px;
+  padding: 15px;
+  width: 200px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+form .timer {
+  font-size: 30px;
+  color: darkorange;
+}
