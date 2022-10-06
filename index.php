@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<div>test</div>
 <head>
     <meta charset="utf-8" />
     <meta name="keywords" content="HTML, CSS" />
@@ -41,8 +40,24 @@
     <!--This is done in php now-->
 
 
-    
+    <!--Sale Search-->
+    <form action="index.php" method="post">
+    <fieldset>
+        <legend>Search</legend>
+        <label for="saleID">Sale ID</label>
+        <input type="text" name="saleID" id="saleID"/>
+    </fieldset>
+    <input type="submit" name="searchSale" value="Search"/>
 
+     <!--Sale Detail-->
+     <form action="index.php" method="post">
+    <fieldset>
+        <legend>Sale Detail</legend>
+        <label for="saleID">Sale ID</label>
+        <input type="text" name="saleID" id="saleID"/>
+    </fieldset>
+    <input type="submit" name="printSale" value="Search"/>
+    
 <?php
     //ESTABLISHING CONNECTION TO DATABASE
     require_once("SQLSettings.php");
@@ -130,7 +145,7 @@
 
     //Add to the Sales sql table
     $sqlTable="sale";
-    if($validSaleInput){
+    if($validSaleInput and isset($_POST["addSale"])){
         $currentDate = date("Y-m-d");
         $total = 0;
         //calculate the total
@@ -150,9 +165,10 @@
 
         }
     };
-    $sqlTable="saledetail";
+
     //Add item into sales details
-    if($validSaleInput){ 
+    $sqlTable="saledetail";
+    if($validSaleInput and isset($_POST["addSale"])){ 
         $saleID = mysqli_query($conn, "SELECT saleID FROM sale WHERE customerID=$customerID ORDER BY saleID DESC;")->fetch_row()[0] ?? false; //VERY UGLY SOLUTION HERE TOO
         foreach ($cart as $fruit){ 
             $itmeID = mysqli_query($conn, "SELECT itemID FROM item WHERE productName=\"$fruit\";")->fetch_row()[0] ?? false;//gets itemID from database
@@ -170,7 +186,77 @@
                 }
             }
         }
+    };
+
+    //THIS SECTION IS FOR THE SEARCH RESULTS(CAN BE CONVERTED TO ANYLYSIS OF MEMBER NEEDS)
+    //catch search input
+    $saleID = null;
+    $validSearchInput = false;
+    catchVarSearch("saleID", $saleID);
+
+    $sqlTable = "sale";
+    if($validSearchInput){
+    $query = "SELECT * FROM $sqlTable WHERE saleID = \"$saleID\"";
+    $result = mysqli_query($conn, $query);
+    if(!$result){
+        echo $conn->error;
     }
+    else{
+        echo "<table class=\"Sale\">\n";
+            echo "<tr>\n"
+                ."<th scope=\"col\">Sale ID</th>\n"
+                ."<th scope=\"col\">Customer ID</th>\n"
+                ."<th scope=\"col\">Total</th>\n"
+                ."<th scope=\"col\">Date</th>\n"
+                ."</tr>\n";
+
+            while ($row = mysqli_fetch_assoc($result)){
+                echo "<tr>\n";
+                echo "<td>", $row["saleID"], "</td>\n";
+                echo "<td>", $row["customerID"], "</td>\n";
+                echo "<td>", $row["totalPrice"], "</td>\n";
+                echo "<td>", $row["date"], "</td>\n";
+                echo "</tr>\n";
+            }
+            echo "</table>\n";
+        }
+    
+    };
+
+    //THIS SECTION IS TO DISPLAY SALE DETAILS, EACH ITEM
+    $saleID = null;
+    $validSaleIDInput = false;
+    catchVarSaleID("saleID", $saleID);
+
+    $sqlTable = "saledetail";
+    if($validSaleIDInput){
+    $query = "SELECT * FROM $sqlTable WHERE saleID = \"$saleID\"";
+    $result = mysqli_query($conn, $query);
+    if(!$result){
+        echo $conn->error;
+    }
+    else{
+        echo "<table class=\"Sale\">\n";
+            echo "<tr>\n"
+                ."<th scope=\"col\">Sale ID</th>\n"
+                ."<th scope=\"col\">Item</th>\n"
+                ."<th scope=\"col\">Quantity</th>\n"
+                ."<th scope=\"col\">Price</th>\n"
+                ."</tr>\n";
+
+            while ($row = mysqli_fetch_assoc($result)){
+                echo "<tr>\n";
+                echo "<td>", $row["saleID"], "</td>\n";
+                echo "<td>", $row["itemID"], "</td>\n";
+                echo "<td>", $row["quantity"], "</td>\n";
+                echo "<td>", $row["price"], "</td>\n";
+                echo "</tr>\n";
+            }
+            echo "</table>\n";
+        }
+    
+    };
+
     //CLOSE CONNECTION
     mysqli_close($conn);
     }
@@ -192,6 +278,23 @@
             $validSaleInput = True;
         }
     }
+
+    //Assings vars of search
+    function catchVarSearch($input, &$var){
+        global $validSearchInput;
+        if(isset($_POST[$input])){
+            $var = $_POST[$input];
+            $validSearchInput = True;
+        }
+    }
+    function catchVarSaleID($input, &$var){
+        global $validSaleIDInput;
+        if(isset($_POST[$input])){
+            $var = $_POST[$input];
+            $validSaleIDInput = True;
+        }
+    }
+    
 
 ?>
 </body>
