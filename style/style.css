@@ -377,7 +377,7 @@ form .input,
   clear: both;;
 }
 
-.form form .button input {
+.form form .button input, input[type="submit"] {
   border-radius: 4px;
   background-color: lightsalmon;
   border: none;
@@ -511,7 +511,7 @@ form .input input:not(:placeholder-shown) + label {
   transform: translate(0, -50%);
   opacity: 1;
 }
-form .button button, form .button input {
+form .button button, form .button input, input[type="submit"] {
   border-radius: 4px;
   background-color: darkorange;
   border: none;
