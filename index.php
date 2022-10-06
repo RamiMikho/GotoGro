@@ -51,11 +51,10 @@
         echo "<p>Database connection failed</p>";
     }
     else{
-    //query to get each item
+
+    //THIS SECTION IS FOR DISPLAYING THE SALES ITEMS FROM SQL DB
     $sqlTable = "item";
     $result = mysqli_query($conn, "SELECT * FROM $sqlTable");
-    //COME BACK TO THIS MAKE IT PRETTIER
-    //THIS SECTION IS FOR DISPLAYING THE SALES ITEMS FROM SQL DB
     echo "
     <form action=\"index.php\" method=\"post\">
     <fieldset>
@@ -70,7 +69,7 @@
         
         echo "</select>
         <ul style=\"list-style-type: none;\">";
-
+        //Loops through the items
         while ($row = mysqli_fetch_assoc($result)) { 
             echo "<li style=\"display: inline-block;\">";
             $value = $row["productName"];
@@ -95,7 +94,6 @@
     $phoneNo = null;
     $email = null;
     $address = null;
-
     $validMemberInput = false;
 
     //Catching the Variables from the POST submission form
@@ -104,9 +102,6 @@
     catchVar("phoneNo", $phoneNo);
     catchVar("email", $email);
     catchVar("address", $address);
-
-    //Testing statment
-    //echo "<p>",empty($_POST['firstName']), $firstName, $lastName, $phoneNo, $email, $address,$validMemberInput," </p>";
 
     //QUERY TO INSERT/ADD MEMBER
     $sqlTable = "customer";
@@ -125,37 +120,34 @@
 
     //THIS SECTION PRETAINS TO ADDING SALES RECORDS THIS WILL BE MOVED TO
     //Initializing variables
-    $kiwi = null;
     $customerID = null;
     $cart = null;
-
     $validSaleInput = false;
     
-
     //Get Item
     catchVarItem("customerID",$customerID);
     catchVarItem("cart", $cart);
-    catchVarItem("kiwi", $kiwi);
 
+    //Add to the Sales sql table
     $sqlTable="sale";
-    //Add to Sales sql table
     if($validSaleInput){
-
         $currentDate = date("Y-m-d");
         $total = 0;
-        foreach ($cart as $fruit){ 
-            catchVarItem("quantity$fruit", $quantity);// VERY UGLY SOLUTION
+        //calculate the total
+        foreach ($cart as $fruit){  //loop through each item checked, multiply by quantity and sum total
+            catchVarItem("quantity$fruit", $quantity);// quantity$fruit = quanity+fruitname
             $price = mysqli_query($conn, "SELECT price FROM item WHERE productName=\"$fruit\";")->fetch_row()[0] ?? false;
             $total = $total + $price * $quantity;
         }
-        
+        //INSERT STATEMENT
         $query = "INSERT INTO $sqlTable (customerID, totalPrice, date) VALUES ($customerID, $total, '$currentDate')";
         $result = mysqli_query($conn, $query);
         if(!$result){
            echo $conn->error,"<p>Something went wrong </p>";
         }
         else{
-        
+        //PUT S
+
         }
     };
     $sqlTable="saledetail";
