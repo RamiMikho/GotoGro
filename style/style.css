@@ -52,6 +52,22 @@ nav ul li a:hover {
   background-color: #3232ff;
   color: whitesmoke;
 }
+.sidebar {
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  background-color: coral;
+  position: relative;
+  height: 100%;
+  overflow: auto;
+}
+.sidebar a {
+  display: block;
+  color: white;
+  padding: 16px;
+  text-decoration: none;
+}
+ 
 footer {
   background-color: orangered;
   height: auto;
