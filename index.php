@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="keywords" content="HTML, CSS" />
-    <link href="styles/style.css" rel="stylesheet" />
+    <link href="style/style.css" rel="stylesheet" />
     <script src="scripts/Employee.js"></script>
     <title>GotoGro</title>
 </head>
@@ -44,8 +44,8 @@
     <form action="index.php" method="post">
     <fieldset>
         <legend>Search</legend>
-        <label for="customerID">Customer ID</label>
-        <input type="text" name="customerID" id="customerID"/>
+        <label for="customerIDSearch">Customer ID</label>
+        <input type="text" name="customerIDSearch" id="customerIDSearch"/>
     </fieldset>
     <input type="submit" name="searchSale" value="Search"/>
 
@@ -192,7 +192,7 @@
     //catch search input
     $customerID = null;
     $validSearchInput = false;
-    catchVarSearch("customerID", $customerID);
+    catchVarSearch("customerIDSearch", $customerID);
 
     $sqlTable = "sale";
     if($validSearchInput and isset($_POST["searchSale"])){
