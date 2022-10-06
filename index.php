@@ -44,8 +44,8 @@
     <form action="index.php" method="post">
     <fieldset>
         <legend>Search</legend>
-        <label for="saleID">Sale ID</label>
-        <input type="text" name="saleID" id="saleID"/>
+        <label for="customerID">Customer ID</label>
+        <input type="text" name="customerID" id="customerID"/>
     </fieldset>
     <input type="submit" name="searchSale" value="Search"/>
 
@@ -190,13 +190,13 @@
 
     //THIS SECTION IS FOR THE SEARCH RESULTS(CAN BE CONVERTED TO ANYLYSIS OF MEMBER NEEDS)
     //catch search input
-    $saleID = null;
+    $customerID = null;
     $validSearchInput = false;
-    catchVarSearch("saleID", $saleID);
+    catchVarSearch("customerID", $customerID);
 
     $sqlTable = "sale";
-    if($validSearchInput){
-    $query = "SELECT * FROM $sqlTable WHERE saleID = \"$saleID\"";
+    if($validSearchInput and isset($_POST["searchSale"])){
+    $query = "SELECT * FROM $sqlTable WHERE customerID = $customerID;";
     $result = mysqli_query($conn, $query);
     if(!$result){
         echo $conn->error;
@@ -229,7 +229,7 @@
     catchVarSaleID("saleID", $saleID);
 
     $sqlTable = "saledetail";
-    if($validSaleIDInput){
+    if($validSaleIDInput and  isset($_POST["printSale"])){
     $query = "SELECT * FROM $sqlTable WHERE saleID = \"$saleID\"";
     $result = mysqli_query($conn, $query);
     if(!$result){
