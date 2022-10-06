@@ -146,42 +146,33 @@
            echo $conn->error,"<p>Something went wrong </p>";
         }
         else{
-        //PUT S
+        //PUT SUCCESS NOTIFICATION/EVENT HERE
 
         }
     };
     $sqlTable="saledetail";
     //Add item into sales details
     if($validSaleInput){ 
-        
         $saleID = mysqli_query($conn, "SELECT saleID FROM sale WHERE customerID=$customerID ORDER BY saleID DESC;")->fetch_row()[0] ?? false; //VERY UGLY SOLUTION HERE TOO
         foreach ($cart as $fruit){ 
-        $itmeID = mysqli_query($conn, "SELECT itemID FROM item WHERE productName=\"$fruit\";")->fetch_row()[0] ?? false;//gets itemID from database
-        $price = mysqli_query($conn, "SELECT price FROM item WHERE productName=\"$fruit\";")->fetch_row()[0] ?? false;//gets price from database
-        catchVarItem("quantity$fruit", $quantity); //catches quantity for fruit
-        $query = "INSERT INTO $sqlTable (saleID, itemID, quantity, price) 
-        VALUES ($saleID,$itmeID, $quantity, $price*$quantity)";
-        $result = mysqli_query($conn, $query);
-        if(!$result){
-           echo "<p>Something went wrong </p>";
+            $itmeID = mysqli_query($conn, "SELECT itemID FROM item WHERE productName=\"$fruit\";")->fetch_row()[0] ?? false;//gets itemID from database
+            $price = mysqli_query($conn, "SELECT price FROM item WHERE productName=\"$fruit\";")->fetch_row()[0] ?? false;//gets price from database
+            catchVarItem("quantity$fruit", $quantity); //catches quantity for fruit
+            $query = "INSERT INTO $sqlTable (saleID, itemID, quantity, price) 
+            VALUES ($saleID,$itmeID, $quantity, $price*$quantity)";
+            $result = mysqli_query($conn, $query);
+            if(!$result){
+            echo "<p>Something went wrong </p>";
+            }
+            else{
+                foreach ($cart as $fruit){ 
+                    echo $fruit, "<br />";
+                }
+            }
         }
-        else{
-        foreach ($cart as $fruit){ 
-            echo $fruit, "<br />";
-        }
-
-       }
     }
-
-
-    }
-
-    //function check if item is checked 
-
-
+    //CLOSE CONNECTION
     mysqli_close($conn);
-
-    echo "<p>success<p>";
     }
 
     //CATCHES THE INPUT AND ASSIGNS IT TO VAR, ALSO CHECKS FOR INPUT EXISITENCE, NEED MORE VALIDATIONG/SANITATION OF INPUT
