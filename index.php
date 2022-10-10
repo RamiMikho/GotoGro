@@ -23,16 +23,26 @@
     <form action="index.php" method="post">
     <fieldset>
         <legend>Add member to Database</legend>
-        <label for="firstName">First Name</label>
-        <input type="text" name="firstName" id="firstName" value=""/>
-        <label for="lastName">Last Name</label>
-        <input type="text" name="lastName" id="lastName"/>
-        <label for="phoneNo">Phone Number</label>
-        <input type="text" name="phoneNo" id="phoneNo"/>
-        <label for="email">Email</label>
-        <input type="text" name="email" id="email"/>
-        <label for="address">Address</label>
-        <input type="text" name="address" id="address"/>
+        <div>
+            <label for="firstName">First Name</label>
+            <input type="text" name="firstName" id="firstName" value=""/>
+        </div>
+        <div>
+            <label for="lastName">Last Name</label>
+            <input type="text" name="lastName" id="lastName"/>
+        </div>
+        <div>
+            <label for="phoneNo">Phone Number</label>
+            <input type="text" name="phoneNo" id="phoneNo"/>
+        </div>
+        <div>
+            <label for="email">Email</label>
+            <input type="text" name="email" id="email"/>
+        </div>
+        <div>
+            <label for="address">Address</label>
+                <input type="text" name="address" id="address"/>
+        </div>
     </fieldset>
     <input type="submit" name="addMember" value="Add"/>
     </form>
