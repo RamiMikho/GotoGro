@@ -4,6 +4,6 @@
 	$host = "localhost";
 	$user = "root";
 	$pwd  = "";
-	$sqlDB  = "gotogrov1";
+	$sqlDB  = "GotoGro";
 
 ?>
