@@ -135,6 +135,6 @@ if(isset($_POST['submit']))
     }
 
     //closing connection to database
-    mysql_close($con);
+    mysqli_close($con);
 }
 ?>
