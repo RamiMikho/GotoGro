@@ -7,7 +7,7 @@
     <meta name="description" content="Creating Web Application" />
     <meta name="keyword" content="HTML, CSS, Javascript" />
     <meta name="author" content="Hayden Tran" />
-    <title>Enquire</title>
+    <title>Add member</title>
     <link rel="stylesheet" href="style/style.css" />
     <link
       rel="stylesheet"
@@ -19,10 +19,12 @@
       <img src="images/goto_logo.png" alt="logo" class="logo" />
 
       <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="product.html">Edit sale</a></li>
-        <li><a href="member-add.html">Add Member</a></li>
+        <li><a href="indexOld.html">Home</a></li>
+        <li><a href="product.html">Add sale</a></li>
+        <li><a href="member-add.php">Add Member</a></li>
+        <li><a href="search-member.php">Search member</a></li>
         <li><a href="about.html">About me</a></li>
+
       </ul>
     </nav>
 

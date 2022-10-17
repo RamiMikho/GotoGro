@@ -1,7 +1,7 @@
 <?php
 
 // Include file with sql details
-	$host = "localhost:3307";
+	$host = "localhost";
 	$user = "root";
 	$pwd  = "";
 	$sqlDB  = "GotoGro";
