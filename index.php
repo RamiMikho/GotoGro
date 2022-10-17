@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="keywords" content="HTML, CSS" />
     <link href="style/style.css" rel="stylesheet" />
-    <script src="scripts/Employee.js"></script>
+    
     <title>GotoGro</title>
 </head>
 
@@ -264,8 +264,19 @@
             }
             echo "</table>\n";
         }
-    
+        
     };
+    echo "<p>WYFTFTFTFTF</p>";
+    //THIS SECTION IS FOR SAVING FILES
+    $dataBaseFile = fopen("salesData.csv", "w");
+    $result = mysqli_query($conn, "SELECT * FROM sale");
+    while($sqlSaleData = mysqli_fetch_assoc($result)){
+        $dataToFile = $sqlSaleData["saleID"] . PHP_EOL;
+        fwrite($dataBaseFile, $dataToFile);
+        echo "<p>",$dataToFile,"AA</p>";
+    }
+    fclose($dataBaseFile);
+    
 
     //CLOSE CONNECTION
     mysqli_close($conn);
