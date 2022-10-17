@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="keywords" content="HTML, CSS" />
     <link href="style/style.css" rel="stylesheet" />
-    <script src="scripts/Employee.js"></script>
+    
     <title>GotoGro</title>
 </head>
 
@@ -23,16 +23,26 @@
     <form action="index.php" method="post">
     <fieldset>
         <legend>Add member to Database</legend>
-        <label for="firstName">First Name</label>
-        <input type="text" name="firstName" id="firstName" value=""/>
-        <label for="lastName">Last Name</label>
-        <input type="text" name="lastName" id="lastName"/>
-        <label for="phoneNo">Phone Number</label>
-        <input type="text" name="phoneNo" id="phoneNo"/>
-        <label for="email">Email</label>
-        <input type="text" name="email" id="email"/>
-        <label for="address">Address</label>
-        <input type="text" name="address" id="address"/>
+        <div>
+            <label for="firstName">First Name</label>
+            <input type="text" name="firstName" id="firstName" value=""/>
+        </div>
+        <div>
+            <label for="lastName">Last Name</label>
+            <input type="text" name="lastName" id="lastName"/>
+        </div>
+        <div>
+            <label for="phoneNo">Phone Number</label>
+            <input type="text" name="phoneNo" id="phoneNo"/>
+        </div>
+        <div>
+            <label for="email">Email</label>
+            <input type="text" name="email" id="email"/>
+        </div>
+        <div>
+            <label for="address">Address</label>
+                <input type="text" name="address" id="address"/>
+        </div>
     </fieldset>
     <input type="submit" name="addMember" value="Add"/>
     </form>
@@ -254,8 +264,19 @@
             }
             echo "</table>\n";
         }
-    
+        
     };
+    echo "<p>WYFTFTFTFTF</p>";
+    //THIS SECTION IS FOR SAVING FILES
+    $dataBaseFile = fopen("salesData.csv", "w");
+    $result = mysqli_query($conn, "SELECT * FROM sale");
+    while($sqlSaleData = mysqli_fetch_assoc($result)){
+        $dataToFile = $sqlSaleData["saleID"] . PHP_EOL;
+        fwrite($dataBaseFile, $dataToFile);
+        echo "<p>",$dataToFile,"AA</p>";
+    }
+    fclose($dataBaseFile);
+    
 
     //CLOSE CONNECTION
     mysqli_close($conn);
