@@ -4,9 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Creating Web Application" />
-    <meta name="keyword" content="HTML, CSS, Javascript" />
-    <meta name="author" content="Hayden Tran" />
+    <meta name="keyword" content="HTML, CSS, PHP" />
     <title>Search Customer</title>
     <link rel="stylesheet" href="style/style.css" />
     <link
@@ -26,99 +24,7 @@
         <li><a href="about.html">About us</a></li>
       </ul>
     </nav>
-
-    <!-- <form action="search-member.php" method="post">
-        <fieldset>
-            <legend>Search</legend>
-            <label for="customerIDSearch">Customer ID</label>
-            <input type="text" name="customerIDSearch" id="customerIDSearch"/>
-        </fieldset>
-        <input type="submit" name="searchSale" value="Search"/>
-    </form>
-    
-    <?php
-      if(isset($_POST['submit']))
-      {
-
-        //database details for connecting frontend form to database
-        $host = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "GotoGro";
-
-        //creating connection to database
-        $con = mysqli_connect($host, $username, $password, $dbname);
-        
-        //checking if connection is working or not
-        if(!$con)
-        {
-            die("Connection to database failed". mysqli_connect_error());
-        }
-
-        //THIS SECTION IS FOR THE SEARCH RESULTS(CAN BE CONVERTED TO ANYLYSIS OF MEMBER NEEDS)
-        //catch search input
-        $customerID = null;
-        $validSearchInput = false;
-        catchVarSearch("customerIDSearch", $customerID);
-
-        $sqlTable = "sale";
-        if($validSearchInput and isset($_POST["searchSale"])){
-        $query = "SELECT * FROM $sqlTable WHERE customerID = $customerID;";
-        $result = mysqli_query($conn, $query);
-        if(!$result){
-            echo $conn->error;
-        }
-        else{
-            echo "<table class=\"Sale\">\n";
-                echo "<tr>\n"
-                    ."<th scope=\"col\">Sale ID</th>\n"
-                    ."<th scope=\"col\">Customer ID</th>\n"
-                    ."<th scope=\"col\">Total</th>\n"
-                    ."<th scope=\"col\">Date</th>\n"
-                    ."</tr>\n";
-
-                while ($row = mysqli_fetch_assoc($result)){
-                    echo "<tr>\n";
-                    echo "<td>", $row["saleID"], "</td>\n";
-                    echo "<td>", $row["customerID"], "</td>\n";
-                    echo "<td>", $row["totalPrice"], "</td>\n";
-                    echo "<td>", $row["date"], "</td>\n";
-                    echo "</tr>\n";
-                }
-                echo "</table>\n";
-            }
-          
-        };
-      }
-?> -->
-
-
-      <!--Member input-->
-
-    <!--Sale input-->
-    <!--This is done in php now-->
-
-
-    <!--Sale Search-->
-    <form action="search-member.php" method="post">
-    <fieldset>
-        <legend>Search</legend>
-        <label for="customerIDSearch">Customer ID</label>
-        <input type="text" name="customerIDSearch" id="customerIDSearch"/>
-    </fieldset>
-    <input type="submit" name="searchSale" value="Search"/>
-    </form>
-
-     <!--Sale Detail-->
-     <form action="search-member.php" method="post">
-    <fieldset>
-        <legend>Sale Detail</legend>
-        <label for="saleID">Sale ID</label>
-        <input type="text" name="saleID" id="saleID"/>
-    </fieldset>
-    <input type="submit" name="printSale" value="Search"/>
-    </form>
-
+  <!-- DISPLAY CUSTOMER DB -->
     <div class = "display">
     <?php
     //ESTABLISHING CONNECTION TO DATABASE
@@ -130,7 +36,7 @@
     else{
 
     //THIS SECTION IS FOR DISPLAYING THE SALES ITEMS FROM SQL DB
-    $sqlTable = "item";
+    $sqlTable = "customer";
     $result = mysqli_query($conn, "SELECT * FROM $sqlTable");
     
     
@@ -140,6 +46,68 @@
 
     //THIS SECTION IS FOR THE SEARCH RESULTS(CAN BE CONVERTED TO ANYLYSIS OF MEMBER NEEDS)
     //catch search input
+    $customerID = null;
+    $validSearchInput = false;
+    catchVarSearch("customerIDSearch", $customerID);
+
+    $sqlTable = "customer";
+  
+    $query = "SELECT * FROM $sqlTable;";
+    $result = mysqli_query($conn, $query);
+    if(!$result){
+        echo $conn->error;
+    }
+    else{
+        echo "<table class=\"Sale\">\n";
+            echo "<tr>\n"
+                ."<th scope=\"col\">Customer ID</th>\n"
+                ."<th scope=\"col\">First name</th>\n"
+                ."<th scope=\"col\">Last name</th>\n"
+                ."<th scope=\"col\">Phone</th>\n"
+                ."<th scope=\"col\">Email</th>\n"
+                ."<th scope=\"col\">Address</th>\n"
+                ."</tr>\n";
+
+            while ($row = mysqli_fetch_assoc($result)){
+                echo "<tr>\n";
+                echo "<td>", $row["customerID"], "</td>\n";
+                echo "<td>", $row["firstName"], "</td>\n";
+                echo "<td>", $row["lastName"], "</td>\n";
+                echo "<td>", $row["phoneNo"], "</td>\n";
+                echo "<td>", $row["email"], "</td>\n";
+                echo "<td>", $row["address"], "</td>\n";
+                echo "</tr>\n";
+            }
+            echo "</table>\n";
+        }
+    
+    };
+
+    //CLOSE CONNECTION
+    mysqli_close($conn);
+
+?>  
+    </div>
+
+    <!--Sale Search-->
+    <form action="search-member.php" method="post">
+    <fieldset>
+        <legend>Search</legend>
+        <label for="customerIDSearch">Customer ID</label>
+        <input type="text" name="customerIDSearch" id="customerIDSearch"/>
+    </fieldset>
+    <input type="submit" name="searchSale" value="Search"/>
+    </form>
+    <!-- DISPLAY USER PURCHASE -->
+    <div class = "display">
+    <?php
+    //ESTABLISHING CONNECTION TO DATABASE
+    require_once("SQLSettings.php");
+    $conn = new mysqli($host, $user, $pwd, $sqlDB);
+    if(!$conn){
+        echo "<p>Database connection failed</p>";
+    }
+    else{
     $customerID = null;
     $validSearchInput = false;
     catchVarSearch("customerIDSearch", $customerID);
@@ -172,11 +140,9 @@
         }
     
     };
-
     //CLOSE CONNECTION
     mysqli_close($conn);
     }
-
     //CATCHES THE INPUT AND ASSIGNS IT TO VAR, ALSO CHECKS FOR INPUT EXISITENCE, NEED MORE VALIDATIONG/SANITATION OF INPUT
     function catchVar($input, &$var){
         global $validMemberInput;
@@ -185,7 +151,6 @@
             $validMemberInput = True;
         }
     }
-
     //Assigns the variables for the sale of items
     function catchVarItem($input, &$var){
         global $validSaleInput;
@@ -194,7 +159,6 @@
             $validSaleInput = True;
         }
     }
-
     //Assings vars of search
     function catchVarSearch($input, &$var){
         global $validSearchInput;
@@ -212,6 +176,66 @@
     }
 ?>  
     </div>
+
+     <!--Sale Detail-->
+     <form action="search-member.php" method="post">
+    <fieldset>
+        <legend>Sale Detail</legend>
+        <label for="saleID">Sale ID</label>
+        <input type="text" name="saleID" id="saleID"/>
+    </fieldset>
+    <input type="submit" name="printSale" value="Search"/>
+    </form>
+
+    <!-- DISPLAY SALE DETAIL BASED ON SALE ID -->
+    <div class = "display">
+    <?php
+    //ESTABLISHING CONNECTION TO DATABASE
+    require_once("SQLSettings.php");
+    $conn = new mysqli($host, $user, $pwd, $sqlDB);
+    if(!$conn){
+        echo "<p>Database connection failed</p>";
+    }
+    else{
+      $saleID = null;
+      $validSaleIDInput = false;
+      catchVarSaleID("saleID", $saleID);
+  
+      $sqlTable = "saledetail";
+      if($validSaleIDInput and  isset($_POST["printSale"])){
+      $query = "SELECT saledetail.saleID, item.productName, saledetail.quantity, saledetail.price FROM saledetail, item WHERE saledetail.saleID = \"$saleID\" AND item.itemID = saledetail.itemID"; 
+      $result = mysqli_query($conn, $query);
+      if(!$result){
+          echo $conn->error;
+      }
+      else{
+          echo "<table class=\"Sale\">\n";
+              echo "<tr>\n"
+                  ."<th scope=\"col\">Sale ID</th>\n"
+                  ."<th scope=\"col\">Product</th>\n"
+                  ."<th scope=\"col\">Quantity</th>\n"
+                  ."<th scope=\"col\">Price</th>\n"
+                  ."</tr>\n";
+  
+              while ($row = mysqli_fetch_assoc($result)){
+                  echo "<tr>\n";
+                  echo "<td>", $row["saleID"], "</td>\n";
+                  echo "<td>", $row["productName"], "</td>\n";
+                  echo "<td>", $row["quantity"], "</td>\n";
+                  echo "<td>", $row["price"], "</td>\n";
+                  echo "</tr>\n";
+              }
+              echo "</table>\n";
+          }
+          
+      };    
+    };
+    //CLOSE CONNECTION
+    mysqli_close($conn);
+  
+?>
+</div>
+
 
     <footer>
       <h3>Goto Grocery</h3>

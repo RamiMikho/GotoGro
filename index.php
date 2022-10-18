@@ -5,7 +5,6 @@
     <meta charset="utf-8" />
     <meta name="keywords" content="HTML, CSS" />
     <link href="style/style.css" rel="stylesheet" />
-    
     <title>GotoGro</title>
 </head>
 

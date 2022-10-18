@@ -162,6 +162,20 @@ header h1 {
   color: white;
   background-color: rgb(96, 123, 139);
 }
+
+.form label {
+  width: 85px;
+  margin: 10px;
+  display: inline-block;
+}
+
+.form li {
+  margin-bottom: 20px;
+  margin-top: 20px;
+  align-items: center;
+  position: relative;
+}
+
 .services {
   margin-bottom: 100px;
 }
@@ -443,8 +457,8 @@ form {
   padding: 50px;
   text-align: center;
   margin: auto;
-  margin-top: 5%;
-  margin-bottom: 100px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   color: white;
   font-family: "Century Gothic", sans-serif;
 }
@@ -531,7 +545,7 @@ form .timer {
 
 .display {
   margin: auto;
-  margin-bottom: 100px;
+  margin-bottom: 20px;
 }
 .display table {
   width: 1200px;
@@ -544,5 +558,5 @@ form .timer {
   height: 100px;
   text-align: center;
   border: 2px solid black;
-  border-spacing: 10ch;
+  border-spacing: 10px;
 }

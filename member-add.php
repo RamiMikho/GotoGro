@@ -4,9 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Creating Web Application" />
-    <meta name="keyword" content="HTML, CSS, Javascript" />
-    <meta name="author" content="Hayden Tran" />
+    <meta name="keyword" content="HTML, CSS, PHP" />
     <title>Add member</title>
     <link rel="stylesheet" href="style/style.css" />
     <link
@@ -135,6 +133,6 @@ if(isset($_POST['submit']))
     }
 
     //closing connection to database
-    mysql_close($con);
+    mysqli_close($con);
 }
 ?>
