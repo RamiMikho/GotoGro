@@ -316,7 +316,7 @@
         }
     }
     
-
+//SELECT * FROM sale WHERE date = (CURDATE()-INTERVAL 7 DAY);
 ?>
 </body>
 <footer id="indexFooter">

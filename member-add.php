@@ -97,32 +97,29 @@
 if(isset($_POST['submit']))
 {
     //database details for connecting frontend form to database
-    $host = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "GotoGro";
+    require_once("SQLSettings.php");
 
     //creating connection to database
-    $con = mysqli_connect($host, $username, $password, $dbname);
+    $conn = mysqli_connect($host, $user, $pwd, $sqlDB);
 
     //checking if connection is working or not
-    if(!$con)
+    if(!$conn)
     {
         die("Connection to database failed". mysqli_connect_error());
     }
 
-    $firstname = $_POST['firstname'];
-    $lastname = $_POST['lastname'];
+    $firstName = $_POST['firstname'];
+    $lastName = $_POST['lastname'];
     $email = $_POST['email'];
-    $phonenumber = $_POST['phonenumber'];
+    $phoneNumber = $_POST['phonenumber'];
     $address = $_POST['address'];
 
     //code for sending form details to database
-    $sql = "INSERT INTO customer (firstName, lastName, phoneNo, email, address)
-    VALUES ('$firstname', '$lastname', '$phonenumber', '$email', '$address')";
+    $query = "INSERT INTO customer (firstName, lastName, phoneNo, email, address)
+    VALUES ('$firstName', '$lastName', '$phoneNumber', '$email', '$address')";
 
     //saving details into database
-    $save = mysqli_query($con, $sql);
+    $save = mysqli_query($conn, $query);
     if($save)
     {
         echo "Member Created Successfully";
@@ -133,6 +130,6 @@ if(isset($_POST['submit']))
     }
 
     //closing connection to database
-    mysql_close($con);
+    mysqli_close($conn);
 }
 ?>
