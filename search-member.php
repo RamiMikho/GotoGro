@@ -24,9 +24,90 @@
         <li><a href="about.html">About us</a></li>
       </ul>
     </nav>
+<<<<<<< HEAD
   <!-- DISPLAY CUSTOMER DB -->
     <div class = "display">
     <?php
+=======
+
+    <!--Sale Search-->
+    <form action="search-member.php" method="post">
+    <fieldset>
+        <legend>Search</legend>
+        <label for="customerIDSearch">Customer ID</label>
+        <input type="text" name="customerIDSearch" id="customerIDSearch"/>
+    </fieldset>
+    <input type="submit" name="searchSale" value="Search"/>
+    </form>
+    
+    <?php
+      if(isset($_POST['searchSale']))
+      {
+
+        //database details for connecting frontend form to database
+        require_once("SQLSettings.php");
+
+        //creating connection to database
+        $conn = mysqli_connect($host, $user, $pwd, $sqlDB);
+        
+        //checking if connection is working or not
+        if(!$conn)
+        {
+            die("Connection to database failed". mysqli_connect_error());
+        }
+
+        //THIS SECTION IS FOR THE SEARCH RESULTS(CAN BE CONVERTED TO ANYLYSIS OF MEMBER NEEDS)
+        //catch search input
+        $customerID = null;
+        $validSearchInput = false;
+        catchVarSearch("customerIDSearch", $customerID);
+
+        $sqlTable = "sale";
+        if($validSearchInput and isset($_POST["searchSale"])){
+        $query = "SELECT * FROM $sqlTable WHERE customerID = $customerID;";
+        $result = mysqli_query($conn, $query);
+        if(!$result){
+            echo $conn->error;
+        }
+        else{
+            echo "<table class=\"Sale\">\n";
+                echo "<tr>\n"
+                    ."<th scope=\"col\">Sale ID</th>\n"
+                    ."<th scope=\"col\">Customer ID</th>\n"
+                    ."<th scope=\"col\">Total</th>\n"
+                    ."<th scope=\"col\">Date</th>\n"
+                    ."</tr>\n";
+
+                while ($row = mysqli_fetch_assoc($result)){
+                    echo "<tr>\n";
+                    echo "<td>", $row["saleID"], "</td>\n";
+                    echo "<td>", $row["customerID"], "</td>\n";
+                    echo "<td>", $row["totalPrice"], "</td>\n";
+                    echo "<td>", $row["date"], "</td>\n";
+                    echo "</tr>\n";
+                }
+                echo "</table>\n";
+            }
+          
+        };
+        mysqli_close($conn);
+      }
+?> 
+
+    
+
+     <!--Sale Detail-->
+     <form action="search-member.php" method="post">
+    <fieldset>
+        <legend>Sale Detail</legend>
+        <label for="saleID">Sale ID</label>
+        <input type="text" name="saleID" id="saleID"/>
+    </fieldset>
+    <input type="submit" name="printSale" value="Search"/>
+    </form>
+
+<?php
+>>>>>>> b93c46aa451329332b926e74fe6f5e7d7dc267f3
     //ESTABLISHING CONNECTION TO DATABASE
     require_once("SQLSettings.php");
     $conn = new mysqli($host, $user, $pwd, $sqlDB);
@@ -35,6 +116,7 @@
     }
     else{
 
+<<<<<<< HEAD
     //THIS SECTION IS FOR DISPLAYING THE SALES ITEMS FROM SQL DB
     $sqlTable = "customer";
     $result = mysqli_query($conn, "SELECT * FROM $sqlTable");
@@ -140,6 +222,40 @@
         }
     
     };
+=======
+      $saleID = null;
+      $validSaleIDInput = false;
+      catchVarSaleID("saleID", $saleID);
+  
+      $sqlTable = "saledetail";
+      if($validSaleIDInput and  isset($_POST["printSale"])){
+      $query = "SELECT * FROM $sqlTable WHERE saleID = \"$saleID\"";
+      $result = mysqli_query($conn, $query);
+      if(!$result){
+          echo $conn->error;
+      }
+      else{
+          echo "<table class=\"Sale\">\n";
+              echo "<tr>\n"
+                  ."<th scope=\"col\">Sale ID</th>\n"
+                  ."<th scope=\"col\">Item</th>\n"
+                  ."<th scope=\"col\">Quantity</th>\n"
+                  ."<th scope=\"col\">Price</th>\n"
+                  ."</tr>\n";
+  
+              while ($row = mysqli_fetch_assoc($result)){
+                  echo "<tr>\n";
+                  echo "<td>", $row["saleID"], "</td>\n";
+                  echo "<td>", $row["itemID"], "</td>\n";
+                  echo "<td>", $row["quantity"], "</td>\n";
+                  echo "<td>", $row["price"], "</td>\n";
+                  echo "</tr>\n";
+              }
+              echo "</table>\n";
+          }
+          
+      };
+>>>>>>> b93c46aa451329332b926e74fe6f5e7d7dc267f3
     //CLOSE CONNECTION
     mysqli_close($conn);
     }
@@ -168,12 +284,12 @@
         }
     }
     function catchVarSaleID($input, &$var){
-        global $validSaleIDInput;
-        if(isset($_POST[$input])){
-            $var = $_POST[$input];
-            $validSaleIDInput = True;
-        }
-    }
+      global $validSaleIDInput;
+      if(isset($_POST[$input])){
+          $var = $_POST[$input];
+          $validSaleIDInput = True;
+      }
+  }
 ?>  
     </div>
 
