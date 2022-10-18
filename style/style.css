@@ -162,6 +162,20 @@ header h1 {
   color: white;
   background-color: rgb(96, 123, 139);
 }
+
+.form label {
+  width: 85px;
+  margin: 10px;
+  display: inline-block;
+}
+
+.form li {
+  margin-bottom: 20px;
+  margin-top: 20px;
+  align-items: center;
+  position: relative;
+}
+
 .services {
   margin-bottom: 100px;
 }
@@ -527,4 +541,22 @@ form .button button, form .button input, input[type="submit"] {
 form .timer {
   font-size: 30px;
   color: darkorange;
+}
+
+.display {
+  margin: auto;
+  margin-bottom: 100px;
+}
+.display table {
+  width: 1200px;
+  font-size: 20px;
+}
+
+.display table th,
+.display table td,
+.display table {
+  height: 100px;
+  text-align: center;
+  border: 2px solid black;
+  border-spacing: 10ch;
 }
