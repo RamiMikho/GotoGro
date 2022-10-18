@@ -11,7 +11,7 @@
 
 <body>
     <header>
-        <h1>Mode:</h1>
+        <h1>Mode: Change by Harry</h1>
         <nav>
             <a href="index.html">Employee</a>
             <a href="Manager.html">Manager</a>
