@@ -22,6 +22,7 @@
         <li><a href="member-add.php">Add Member</a></li>
         <li><a href="search-member.php">Search member</a></li>
         <li><a href="about.html">About me</a></li>
+
       </ul>
     </nav>
 
@@ -96,29 +97,32 @@
 if(isset($_POST['submit']))
 {
     //database details for connecting frontend form to database
-    require_once("SQLSettings.php");
+    $host = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "GotoGro";
 
     //creating connection to database
-    $conn = mysqli_connect($host, $user, $pwd, $sqlDB);
+    $con = mysqli_connect($host, $username, $password, $dbname);
 
     //checking if connection is working or not
-    if(!$conn)
+    if(!$con)
     {
         die("Connection to database failed". mysqli_connect_error());
     }
 
-    $firstName = $_POST['firstname'];
-    $lastName = $_POST['lastname'];
+    $firstname = $_POST['firstname'];
+    $lastname = $_POST['lastname'];
     $email = $_POST['email'];
-    $phoneNumber = $_POST['phonenumber'];
+    $phonenumber = $_POST['phonenumber'];
     $address = $_POST['address'];
 
     //code for sending form details to database
-    $query = "INSERT INTO customer (firstName, lastName, phoneNo, email, address)
-    VALUES ('$firstName', '$lastName', '$phoneNumber', '$email', '$address')";
+    $sql = "INSERT INTO customer (firstName, lastName, phoneNo, email, address)
+    VALUES ('$firstname', '$lastname', '$phonenumber', '$email', '$address')";
 
     //saving details into database
-    $save = mysqli_query($conn, $query);
+    $save = mysqli_query($con, $sql);
     if($save)
     {
         echo "Member Created Successfully";
@@ -129,10 +133,6 @@ if(isset($_POST['submit']))
     }
 
     //closing connection to database
-<<<<<<< HEAD
     mysqli_close($con);
-=======
-    mysqli_close($conn);
->>>>>>> b93c46aa451329332b926e74fe6f5e7d7dc267f3
 }
 ?>
