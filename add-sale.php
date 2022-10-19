@@ -77,7 +77,7 @@
     
     //Get Item
     catchVarItem("customerID",$customerID);
-    catchVarItem("cart[]", $cart);
+    catchVarItem("cart", $cart);
 
     //Add to the Sales sql table
     $sqlTable="sale";
