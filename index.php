@@ -70,6 +70,10 @@
     <!-- Generating the reports -->
     <form action="index.php" method="post">
     <input  type="submit" name="generateSales" value="Generate Sales Report">
+    <input  type="submit" name="generateWeekly" value="Generate Weekly Sales Report">
+    <input  type="submit" name="generateMonthly" value="Generate Monthly Sales Report">
+    <input  type="submit" name="generateYearly" value="Generate Yearly Sales Report">
+    <input  type="submit" name="generateMemberAnalysis" value="Generate Member Report">
     </form>
 
     
@@ -280,6 +284,40 @@
             $dataToFile = $dataToFile . $dataToWrite["saleID"] ."," . $dataToWrite["customerID"] . "," . $dataToWrite["totalPrice"] . "," . $dataToWrite["date"] . PHP_EOL;
         }
         writeAFile("salesData.csv",$dataToFile);
+    };
+    if(isset($_POST["generateWeekly"])) {
+        $result = mysqli_query($conn, "");
+        $dataToFile = null;
+        while($dataToWrite = mysqli_fetch_assoc($result)){
+            $dataToFile = $dataToFile;//design output here
+        }
+        writeAFile("Weekly.csv", $dataToFile);
+    };
+    if(isset($_POST["generateMonthly"])) {
+        $result = mysqli_query($conn, "");
+        $dataToFile = null;
+        while($dataToWrite = mysqli_fetch_assoc($result)){
+            $dataToFile = $dataToFile;//design output here
+        }
+        writeAFile("Monthly.csv", $dataToFile);
+    };
+    if(isset($_POST["generateYearly"])) {
+        $result = mysqli_query($conn, "");
+        $dataToFile = null;
+        while($dataToWrite = mysqli_fetch_assoc($result)){
+            $dataToFile = $dataToFile;//design output here
+        }
+        writeAFile("Yearly.csv", $dataToFile);
+    };
+    if(isset($_POST["generateMemberAnalysis"])) {
+        $customerID = null;
+        catchVar("customerIDAnalysis", $customerID); 
+        $result = mysqli_query($conn, "");
+        $dataToFile = null;
+        while($dataToWrite = mysqli_fetch_assoc($result)){
+            $dataToFile = $dataToFile;//design output here
+        }
+        writeAFile("Member $customerID.csv", $dataToFile);
     };
 
     //CLOSE CONNECTION
