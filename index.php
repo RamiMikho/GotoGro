@@ -66,6 +66,12 @@
         <input type="text" name="saleID" id="saleID"/>
     </fieldset>
     <input type="submit" name="printSale" value="Search"/>
+
+    <!-- Generating the reports -->
+    <form action="index.php" method="post">
+    <input  type="submit" name="generateSales" value="Generate Sales Report">
+    </form>
+
     
 <?php
     //ESTABLISHING CONNECTION TO DATABASE
@@ -265,20 +271,26 @@
         }
         
     };
-    echo "<p>WYFTFTFTFTF</p>";
+
     //THIS SECTION IS FOR SAVING FILES
-    $dataBaseFile = fopen("salesData.csv", "w");
-    $result = mysqli_query($conn, "SELECT * FROM sale");
-    while($sqlSaleData = mysqli_fetch_assoc($result)){
-        $dataToFile = $sqlSaleData["saleID"] . PHP_EOL;
-        fwrite($dataBaseFile, $dataToFile);
-        echo "<p>",$dataToFile,"AA</p>";
-    }
-    fclose($dataBaseFile);
-    
+    if(isset($_POST["generateSales"])) {
+        $result = mysqli_query($conn, "SELECT * FROM sale");
+        $dataToFile = null;
+        while($dataToWrite = mysqli_fetch_assoc($result)){
+            $dataToFile = $dataToFile . $dataToWrite["saleID"] ."," . $dataToWrite["customerID"] . "," . $dataToWrite["totalPrice"] . "," . $dataToWrite["date"] . PHP_EOL;
+        }
+        writeAFile("salesData.csv",$dataToFile);
+    };
 
     //CLOSE CONNECTION
     mysqli_close($conn);
+    }
+    
+    function writeAFile($fileName, $dataToFile){
+        $createFile = fopen($fileName, "w");
+        fwrite($createFile, $dataToFile);
+        fclose($createFile);
+        echo "<a href=\"$fileName\" download>Download $fileName Report</a>";
     }
 
     //CATCHES THE INPUT AND ASSIGNS IT TO VAR, ALSO CHECKS FOR INPUT EXISITENCE, NEED MORE VALIDATIONG/SANITATION OF INPUT

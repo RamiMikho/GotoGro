@@ -21,7 +21,7 @@
         <li><a href="add-sale.php">Add sale</a></li>
         <li><a href="member-add.php">Add Member</a></li>
         <li><a href="search-member.php">Search member</a></li>
-        <li><a href="about.html">About me</a></li>
+        <li><a href="about.html">About us</a></li>
 
       </ul>
     </nav>

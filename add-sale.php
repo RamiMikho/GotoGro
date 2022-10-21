@@ -20,7 +20,7 @@
             <li><a href="product.html">Add sale</a></li>
             <li><a href="member-add.php">Add member</a></li>
             <li><a href="search-member.php">Search member</a></li>
-            <li><a href="about.html">About me</a></li>
+            <li><a href="about.html">About us</a></li>
         </ul>
     </nav>
 
