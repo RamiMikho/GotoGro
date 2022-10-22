@@ -35,13 +35,13 @@
         database using member-add.php-->
       <form method="POST" action="member-add.php">
         <div class="input">
-          <input type="text" name="firstname" id="firstname" maxlength="25" pattern="^[A-Za-z]{1,25}$" placeholder="First name" required="required"/>
-          <label for="firstname">First name</label>
+          <input type="text" name="firstName" id="firstName" maxlength="25" pattern="^[A-Za-z]{1,25}$" placeholder="First name" required="required"/>
+          <label for="firstName">First name</label>
         </div>
 
         <div class="input">
-          <input type="text" name="lastname" id="lastname" maxlength="25" pattern="^[A-Za-z]{1,25}$" placeholder="Last name" required="required"/>
-          <label for="lastname">Last name</label>
+          <input type="text" name="lastName" id="lastName" maxlength="25" pattern="^[A-Za-z]{1,25}$" placeholder="Last name" required="required"/>
+          <label for="lastName">Last name</label>
         </div>
 
         <div class="input">
@@ -50,8 +50,8 @@
         </div>
 
         <div class="input">
-          <input type="text" name="phonenumber" id="phone-number" maxlength="10" placeholder="Your phone number" pattern="[0-9]{1,10}" required="required"/>
-          <label for="phonenumber">Phone number</label>
+          <input type="text" name="phoneNumber" id="phone-number" maxlength="10" placeholder="Your phone number" pattern="[0-9]{1,10}" required="required"/>
+          <label for="phoneNumber">Phone number</label>
         </div>
 
         <div class="input">
@@ -62,7 +62,7 @@
   
 
         <div class="button">
-          <input type="submit" name="submit" value="Add member" />
+          <input type="submit" name="addMember" value="Add member" />
           <input type="reset" value="Reset form" />
         </div>
       </form>
@@ -94,45 +94,40 @@
 </html>
 
 <?php
-if(isset($_POST['submit']))
-{
-    //database details for connecting frontend form to database
-    $host = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "GotoGro";
+require_once("SQLSettings.php");
+$conn = new mysqli($host, $user, $pwd, $sqlDB);
 
-    //creating connection to database
-    $con = mysqli_connect($host, $username, $password, $dbname);
+  //checking if connection is working or not
+  if(!$conn)
+  {
+      die("Connection to database failed". mysqli_connect_error());
+  }
+  else{
+  if(isset($_POST['addMember']))
+  {
+      $firstName = $_POST['firstName'];
+      $lastName = $_POST['lastName'];
+      $email = $_POST['email'];
+      $phoneNumber = $_POST['phoneNumber'];
+      $address = $_POST['address'];
 
-    //checking if connection is working or not
-    if(!$con)
-    {
-        die("Connection to database failed". mysqli_connect_error());
+      //code for sending form details to database
+      $sql = "INSERT INTO customer (firstName, lastName, phoneNo, email, address)
+      VALUES ('$firstName', '$lastName', '$phoneNumber', '$email', '$address')";
+
+      //saving details into database
+      $save = mysqli_query($conn, $sql);
+      if($save)
+      {
+          echo "Member Created Successfully";
+      }
+      else
+      {
+          echo "Error occurred!! Please try again";
+      }
+
+      //closing connection to database
+      mysqli_close($conn);
     }
-
-    $firstname = $_POST['firstname'];
-    $lastname = $_POST['lastname'];
-    $email = $_POST['email'];
-    $phonenumber = $_POST['phonenumber'];
-    $address = $_POST['address'];
-
-    //code for sending form details to database
-    $sql = "INSERT INTO customer (firstName, lastName, phoneNo, email, address)
-    VALUES ('$firstname', '$lastname', '$phonenumber', '$email', '$address')";
-
-    //saving details into database
-    $save = mysqli_query($con, $sql);
-    if($save)
-    {
-        echo "Member Created Successfully";
-    }
-    else
-    {
-        echo "Error occurred!! Please try again";
-    }
-
-    //closing connection to database
-    mysqli_close($con);
 }
 ?>
