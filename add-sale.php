@@ -113,12 +113,12 @@
         //INSERT STATEMENT
         $query = "INSERT INTO $sqlTable (customerID, totalPrice, date) VALUES ($customerID, $total, '$currentDate')";
         $result = mysqli_query($conn, $query);
-        if(!$result){
-           echo $conn->error,"<p>Something went wrong </p>";
+        if($result){
+            echo "<p class='success'>Success</p>";
         }
-        else{
-        //PUT SUCCESS NOTIFICATION/EVENT HERE
-
+        else
+        {
+            echo "<p class='fail'>Error occurred</p>";
         }
     };
 
@@ -134,13 +134,12 @@
             $query = "INSERT INTO $sqlTable (saleID, itemID, quantity, price) 
             VALUES ($saleID,$itmeID, $quantity, $price*$quantity)";
             $result = mysqli_query($conn, $query);
-            if(!$result){
-            echo "<p>Something went wrong </p>";
+            if($result){
+                echo "<p class='success'>Success</p>";
             }
-            else{
-                foreach ($cart as $fruit){ 
-                    echo $fruit, "<br />";
-                }
+            else
+            {
+                echo "<p class='fail'>Error occurred</p>";
             }
         }
     };
@@ -207,20 +206,22 @@
         //INSERT into sale table
         $query = "UPDATE $sqlTable SET totalPrice = '$total', date='$currentDate' WHERE saleID = '$saleID'";
         $result = mysqli_query($conn, $query);
-        if(!$result){
-           echo $conn->error,"<p>Something went wrong $query </p>";
+        if($result){
+            echo "<p class='success'>Success</p>";
         }
-        else{
-        //PUT SUCCESS NOTIFICATION/EVENT HERE
+        else
+        {
+            echo "<p class='fail'>Error occurred</p>";
         }
         //delete all previous data
         $query = "DELETE FROM saledetail WHERE saleID=$saleID;";
         $result = mysqli_query($conn, $query);
-        if(!$result){
-           echo $conn->error,"<p>Something went wrong $query</p>";
+        if($result){
+            echo "<p class='success'>Success</p>";
         }
-        else{
-        //PUT SUCCESS NOTIFICATION/EVENT HERE
+        else
+        {
+            echo "<p class='fail'>Error occurred</p>";
         }
         //Add each fruit back into saledetails
         $sqlTable = "saledetail";
@@ -234,13 +235,13 @@
             $query = "INSERT INTO $sqlTable (saleID, quantity, price, itemID) 
             VALUES ($saleID, $quantity, $price*$quantity, '$itemID')";
             $result = mysqli_query($conn, $query);
-            if(!$result){
-            echo "<p>Something went wrong </p>";
+            if($result)
+            {
+                echo "<p class='success'>Success</p>";
             }
-            else{
-                foreach ($cart as $fruit){ 
-                    echo $fruit, "<br />";
-                }
+            else
+            {
+                echo "<p class='fail'>Error occurred</p>";
             }
         }
         session_destroy();

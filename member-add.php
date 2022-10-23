@@ -144,11 +144,11 @@ $conn = new mysqli($host, $user, $pwd, $sqlDB);
       $save = mysqli_query($conn, $query);
       if($save)
       {
-          echo "<p>Member Created Successfully</p>";
+          echo "<p class='success'>Success</p>";
       }
       else
       {
-          echo "<p>Error occurred!! Please try again</p>";
+          echo "<p class='fail'>Error occurred</p>";
       }
 
     
@@ -169,11 +169,11 @@ $conn = new mysqli($host, $user, $pwd, $sqlDB);
       $results = mysqli_query($conn, $query);
       if($results)
       {
-          echo "<p>Member edited Successfully</p>";
+          echo "<p class='success'>Success</p>";
       }
       else
       {
-          echo "<p>Error occurred!! Please try again</p>";
+          echo "<p class='fail'>Error occurred</p>";
       }
 
     }
@@ -203,6 +203,5 @@ $conn = new mysqli($host, $user, $pwd, $sqlDB);
         </li>
       </ul>
     </footer>
-    <script src="script/enquire.js"></script>
   </body>
 </html>

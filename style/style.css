@@ -380,7 +380,50 @@ form .timer {
 .display table td,
 .display table {
   height: 100px;
+  width: 1000px;
   text-align: center;
   border: 2px solid black;
   border-spacing: 10px;
+}
+.display tbody{
+  display: block;
+    overflow-y: scroll;
+    max-height: 700px;
+}
+
+.success,.fail {
+	position: fixed;
+	top: 50%;
+	left: 40%;
+	background-color: rgb(35, 165, 35);
+	border-width: 1px;
+	width: 20%;
+	height: 8%;
+	text-align: center;
+	font-size: 40px;
+	color: wheat;
+	border-radius: 200px;
+	border-color: wheat;
+	border-style: solid;
+  animation: fadeInFromNone 2s ease-out;
+  opacity: 0;
+}
+.fail{
+  background-color: rgb(238, 68, 68);
+}
+@keyframes fadeInFromNone {
+  0% {
+      display: none;
+      opacity: 1;
+  }
+
+  1% {
+      display: block;
+      opacity: 1;
+  }
+
+  100% {
+      display: none;
+      opacity: 0;
+  }
 }

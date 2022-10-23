@@ -56,7 +56,7 @@
     $query = "SELECT * FROM $sqlTable;";
     $result = mysqli_query($conn, $query);
     if(!$result){
-        echo $conn->error;
+        echo "<p class='fail'>Error occurred</p>";
     }
     else{
         echo "<table class=\"Sale\">\n";
@@ -118,7 +118,7 @@
     $query = "SELECT * FROM $sqlTable WHERE customerID = $customerID;";
     $result = mysqli_query($conn, $query);
     if(!$result){
-        echo $conn->error;
+        echo "<p class='fail'>Error occurred</p>";
     }
     else{
         echo "<table class=\"Sale\">\n";
@@ -207,7 +207,7 @@
       $query = "SELECT saledetail.saleID, item.productName, saledetail.quantity, saledetail.price FROM saledetail, item WHERE saledetail.saleID = \"$saleID\" AND item.itemID = saledetail.itemID"; 
       $result = mysqli_query($conn, $query);
       if(!$result){
-          echo $conn->error;
+        echo "<p class='fail'>Error occurred</p>";
       }
       else{
           echo "<table class=\"Sale\">\n";
