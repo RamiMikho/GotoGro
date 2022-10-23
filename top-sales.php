@@ -59,7 +59,7 @@ $mysqli->close();
         <table>
             <tr>
                 <th>ProductName</th>
-                <th>Quantity Sold</th>
+                <th>Quantity of Sold</th>
             </tr>
             <!-- PHP CODE TO FETCH DATA FROM ROWS -->
             <?php
