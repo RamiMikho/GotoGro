@@ -17,7 +17,7 @@
       <img src="images/goto_logo.png" alt="logo" class="logo" />
 
       <ul>
-        <li><a href="indexOld.html">Home</a></li>
+        <li><a href="index.html">Home</a></li>
         <li><a href="add-sale.php">Add sale</a></li>
         <li><a href="member-add.php">Add member</a></li>
         <li><a href="search-member.php">Search member</a></li>
