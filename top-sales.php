@@ -4,8 +4,7 @@
 //ESTABLISHING CONNECTION TO DATABASE
 require_once("SQLSettings.php");
 
-$mysqli = new mysqli($host, $user,
-                $pwd, $sqlDB);
+$mysqli = new mysqli($host, $user, $pwd, $sqlDB);
 
 // Checking for connections
 if ($mysqli->connect_error) {

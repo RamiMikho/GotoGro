@@ -30,6 +30,7 @@
     //ESTABLISHING CONNECTION TO DATABASE
     require_once("SQLSettings.php");
     $conn = new mysqli($host, $user, $pwd, $sqlDB);
+    session_start();
     if(!$conn){
         echo "<p>Database connection failed</p>";
     }
@@ -146,10 +147,11 @@
     }
     //PRINTS THE FORM FOR EDITING
     if(isset($_POST["selectCustomerSale"])){
+        
 
         $customerID = $_POST["customerID"];
-        $_SESSION["customerID"] = $_POST["customerID"];
-        //echo $_SESSION["customerID"];
+        $_SESSION["customerID"] =  $customerID;
+        echo $_SESSION["customerID"];
         echo "
         <form action=\"add-sale.php\" method=\"post\" style=\"width:760px\">
         <fieldset>
@@ -159,7 +161,7 @@
             $saleID = $saleRow["saleID"];
             $totalPrice = $saleRow["totalPrice"];
             $date = $saleRow["date"];
-            echo "<option value=\"$IDs\">Sale ID:$saleID Total Price:$totalPrice Date of Sale:$date</option>";
+            echo "<option value=\"$saleID\">Sale ID:$saleID Total Price:$totalPrice Date of Sale:$date</option>";
         };
         echo "</select>
         <ul style=\"list-style-type: none;\">";
@@ -182,8 +184,10 @@
 
     //MODIFIES THE DATABASES VALUES
     if(isset($_POST["editSale"])){
-    
+
+    if(!isset($customerID)){
     $customerID = $_SESSION["customerID"];
+    }
     $cart = null;
     $saleID = $_POST["saleID"];
 
@@ -200,16 +204,46 @@
             $price = mysqli_query($conn, "SELECT price FROM item WHERE productName=\"$fruit\";")->fetch_row()[0] ?? false;
             $total = $total + $price * $quantity;
         }
-        //INSERT STATEMENT
-        $query = "INSERT INTO $sqlTable (customerID, totalPrice, date) VALUES ($customerID, $total, '$currentDate')";
+        //INSERT into sale table
+        $query = "UPDATE $sqlTable SET totalPrice = '$total', date='$currentDate' WHERE saleID = '$saleID'";
         $result = mysqli_query($conn, $query);
         if(!$result){
-           echo $conn->error,"<p>Something went wrong </p>";
+           echo $conn->error,"<p>Something went wrong $query </p>";
         }
         else{
         //PUT SUCCESS NOTIFICATION/EVENT HERE
-
         }
+        //delete all previous data
+        $query = "DELETE FROM saledetail WHERE saleID=$saleID;";
+        $result = mysqli_query($conn, $query);
+        if(!$result){
+           echo $conn->error,"<p>Something went wrong $query</p>";
+        }
+        else{
+        //PUT SUCCESS NOTIFICATION/EVENT HERE
+        }
+        //Add each fruit back into saledetails
+        $sqlTable = "saledetail";
+        foreach ($cart as $fruit){ 
+            $itemID = mysqli_query($conn, "SELECT itemID FROM item WHERE productName=\"$fruit\";")->fetch_row()[0] ?? false;//gets itemID from database
+            $price = mysqli_query($conn, "SELECT price FROM item WHERE productName=\"$fruit\";")->fetch_row()[0] ?? false;//gets price from database
+            //catchVarItem("quantity$fruit", $quantity); //catches quantity for fruit
+            $quantity = $_POST["quantity$fruit"];
+            //echo $itemID;
+            $itemID = strval($itemID);
+            $query = "INSERT INTO $sqlTable (saleID, quantity, price, itemID) 
+            VALUES ($saleID, $quantity, $price*$quantity, '$itemID')";
+            $result = mysqli_query($conn, $query);
+            if(!$result){
+            echo "<p>Something went wrong </p>";
+            }
+            else{
+                foreach ($cart as $fruit){ 
+                    echo $fruit, "<br />";
+                }
+            }
+        }
+        session_destroy();
     };
 
         
