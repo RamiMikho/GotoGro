@@ -80,6 +80,109 @@ $mysqli->close();
         </table>
     </section>
 
+    <?php
+    //ESTABLISHING CONNECTION TO DATABASE
+    require_once("SQLSettings.php");
+    $conn = new mysqli($host, $user, $pwd, $sqlDB);
+    if(!$conn){
+        echo "<p>Database connection failed</p>";
+    }
+    else{
+    //THIS SECTION IS FOR SAVING FILES
+    if(isset($_POST["generateSales"])) {
+      $result = mysqli_query($conn, "SELECT * FROM sale");
+      $dataToFile = null;
+      while($dataToWrite = mysqli_fetch_assoc($result)){
+          $dataToFile = $dataToFile . $dataToWrite["saleID"] ."," . $dataToWrite["customerID"] . "," . $dataToWrite["totalPrice"] . "," . $dataToWrite["date"] . PHP_EOL;
+      }
+      writeAFile("salesData.csv",$dataToFile);
+  };
+  if(isset($_POST["generateWeekly"])) {
+      $result = mysqli_query($conn, "SELECT * FROM sale WHERE date >= (CURDATE()-INTERVAL 7 DAY);");
+      $dataToFile = null;
+      while($dataToWrite = mysqli_fetch_assoc($result)){
+          $dataToFile = $dataToFile . $dataToWrite["saleID"] ."," . $dataToWrite["customerID"] . "," . $dataToWrite["totalPrice"] . "," . $dataToWrite["date"] . PHP_EOL;
+      }
+      writeAFile("Weekly.csv", $dataToFile);
+  };
+  if(isset($_POST["generateMonthly"])) {
+      $result = mysqli_query($conn, "SELECT * FROM sale WHERE date >= (CURDATE()-INTERVAL 1 Month);");
+      $dataToFile = null;
+      while($dataToWrite = mysqli_fetch_assoc($result)){
+          $dataToFile = $dataToFile . $dataToWrite["saleID"] ."," . $dataToWrite["customerID"] . "," . $dataToWrite["totalPrice"] . "," . $dataToWrite["date"] . PHP_EOL;
+      }
+      writeAFile("Monthly.csv", $dataToFile);
+  };
+  if(isset($_POST["generateYearly"])) { 
+      $result = mysqli_query($conn, "SELECT * FROM sale WHERE date >= (CURDATE()-INTERVAL 1 Year);");
+      $dataToFile = null;
+      while($dataToWrite = mysqli_fetch_assoc($result)){
+          $dataToFile = $dataToFile . $dataToWrite["saleID"] ."," . $dataToWrite["customerID"] . "," . $dataToWrite["totalPrice"] . "," . $dataToWrite["date"] . PHP_EOL;
+      }
+      writeAFile("Yearly.csv", $dataToFile);
+  };
+  if(isset($_POST["generateMemberAnalysis"])) {
+      $customerID = $_POST["customerID"]; 
+      if(0 < strlen($_POST["customerID"])){
+      $result = mysqli_query($conn, "SELECT * FROM sale WHERE customerID = $customerID");
+      $dataToFile = null;
+      while($dataToWrite = mysqli_fetch_assoc($result)){
+          $dataToFile = $dataToFile . $dataToWrite["saleID"] ."," . $dataToWrite["customerID"] . "," . $dataToWrite["totalPrice"] . "," . $dataToWrite["date"] . PHP_EOL;
+      }
+      writeAFile("Member $customerID.csv", $dataToFile);
+    }
+    else{
+      echo "<p class='fail' >Error occurred</p>";
+    }
+  };
+
+
+
+  if(isset($_POST["generateTopSale"])) {
+    $result = mysqli_query($conn, "SELECT item.productName, sum(saleDetail.quantity) FROM saleDetail
+    INNER JOIN item ON item.itemID = saleDetail.itemID GROUP BY productName ORDER BY sum(saleDetail.quantity) DESC");
+    $dataToFile = null;
+    while($dataToWrite = mysqli_fetch_assoc($result)){
+        $dataToFile = $dataToFile . $dataToWrite["productName"] . "," . $dataToWrite["sum(saleDetail.quantity)"] . PHP_EOL;
+    }
+    writeAFile("TopSale.csv", $dataToFile);
+};
+
+
+
+if(isset($_POST["generateMemberAnalysisa"])) {
+  $result = mysqli_query($conn, "");
+  $dataToFile = null;
+  while($dataToWrite = mysqli_fetch_assoc($result)){
+      $dataToFile = $dataToFile;//design output here
+  }
+  writeAFile("Member $customerID.csv", $dataToFile);
+};
+
+
+      //CLOSE CONNECTION
+      mysqli_close($conn);
+    }
+  function writeAFile($fileName, $dataToFile){
+    $createFile = fopen($fileName, "w");
+    fwrite($createFile, $dataToFile);
+    fclose($createFile);
+    echo "<a class='download' href=\"$fileName\" download>Download $fileName Report</a>";
+}
+    ?>
+    <!-- Generating the reports -->
+    <form action="top-sales.php" method="post">
+    <label for="customerID">Customer ID</label>
+    <input type="text" name="customerID" id="customerID"/>
+    <input  type="submit" name="generateMemberAnalysis" value="Generate Member Report">
+    <input  type="submit" name="generateSales" value="Generate Sales Report">
+    <input  type="submit" name="generateWeekly" value="Generate Weekly Sales Report">
+    <input  type="submit" name="generateMonthly" value="Generate Monthly Sales Report">
+    <input  type="submit" name="generateYearly" value="Generate Yearly Sales Report">
+    <input  type="submit" name="generateTopSale" value="Generate Top Sale Report">
+    
+    </form>
+
     <footer>
       <h3>Goto Grocery</h3>
       <p>Connect with us</p>

@@ -393,7 +393,7 @@ form .timer {
 
 .success,.fail {
 	position: fixed;
-	top: 50%;
+	top: 40%;
 	left: 40%;
 	background-color: rgb(35, 165, 35);
 	border-width: 1px;
@@ -418,12 +418,32 @@ form .timer {
   }
 
   1% {
-      display: block;
+      display: none;
       opacity: 1;
   }
 
-  100% {
+  99% {
       display: none;
       opacity: 0;
   }
+  100% {
+    left: 100%;
+    display: none;
+    opacity: 0;
+  }
+}
+.download{
+  display: block;
+	top: 50%;
+	margin-left: 35%;
+	background-color: rgb(35, 165, 35);
+	border-width: 1px;
+	width: 30%;
+	height: 8%;
+	text-align: center;
+	font-size: 30px;
+	color: wheat;
+	border-radius: 200px;
+	border-color: wheat;
+	border-style: solid;
 }
