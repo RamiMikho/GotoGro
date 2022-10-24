@@ -80,7 +80,7 @@
 <?php
     //ESTABLISHING CONNECTION TO DATABASE
     require_once("SQLSettings.php");
-    $conn = new mysqli($host, $user, $pwd, $sqlDB);
+    $conn = mysqli_connect($host, $user, $pwd, $sqlDB);
     if(!$conn){
         echo "<p>Database connection failed</p>";
     }

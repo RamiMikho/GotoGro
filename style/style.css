@@ -20,6 +20,19 @@ body {
   display: flex;
   flex-direction: column;
 }
+.form label {
+  width: 85px;
+  margin: 10px;
+  display: inline-block;
+}
+
+.form li {
+  margin-bottom: 20px;
+  margin-top: 20px;
+  align-items: center;
+  position: relative;
+}
+
 .content,
 .form,
 .personal-info,
